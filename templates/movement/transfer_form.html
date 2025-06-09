@@ -1,0 +1,7 @@
+<h2>Перемещение материалов</h2>
+<form method="post">
+  {% csrf_token %}
+  {{ transfer_form.as_p }}
+  {{ item_form.as_p }}
+  <button type="submit">Сохранить</button>
+</form>

@@ -1,0 +1,26 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="{% url 'home' %}">Материалы+</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item"><a class="nav-link" href="#">Склады</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">Материалы</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">Движение</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">Отчёты</a></li>
+            </ul>
+            <ul class="navbar-nav">
+                {% if user.is_authenticated %}
+                    <li class="nav-item"><a class="nav-link" href="#">{{ user.get_username }}</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'exit' %}">Выход</a></li>
+                {% else %}
+                    <li class="nav-item"><a class="nav-link" href="{% url 'custom_login' %}">Вход</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'register' %}">Регистрация</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</nav>

@@ -1,0 +1,7 @@
+<h2>Списание материалов</h2>
+<form method="post">
+  {% csrf_token %}
+  {{ writeoff_form.as_p }}
+  {{ item_form.as_p }}
+  <button type="submit">Сохранить</button>
+</form>

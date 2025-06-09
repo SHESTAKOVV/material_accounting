@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Поступления материалов</h2>
+
+    <a href="{% url 'incoming_create' %}" class="btn btn-success mb-3">+ Новое поступление</a>
+
+    <div class="card">
+        <div class="card-body">
+            <p>Здесь будет таблица с поступлениями (пока заглушка).</p>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block title %}Главная{% endblock %}
+
+{% block content %}
+<div class="text-center">
+    <h1 class="mb-4">Добро пожаловать в систему учёта материалов</h1>
+    <p class="lead">Используйте навигацию сверху для перехода к нужному разделу.</p>
+</div>
+
+<div class="row mt-5">
+    <div class="col-md-4">
+        <div class="card border-primary shadow-sm">
+            <div class="card-body text-center">
+                <i class="bi bi-box-seam fs-2 text-primary"></i>
+                <h5 class="card-title mt-2">Материалы</h5>
+                <p class="card-text">Управляйте всеми материалами и их остатками</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card border-success shadow-sm">
+            <div class="card-body text-center">
+                <i class="bi bi-truck fs-2 text-success"></i>
+                <h5 class="card-title mt-2">Движение</h5>
+                <p class="card-text">Поступление, списание, перемещения и корректировки</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card border-warning shadow-sm">
+            <div class="card-body text-center">
+                <i class="bi bi-bar-chart fs-2 text-warning"></i>
+                <h5 class="card-title mt-2">Отчёты</h5>
+                <p class="card-text">Аналитика, минимальные остатки, экспорт в Excel</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

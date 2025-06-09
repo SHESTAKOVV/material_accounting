@@ -1,0 +1,37 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Поступление материалов</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="container mt-4">
+    <h1>Добавить поступление</h1>
+    <form method="post">
+        {% csrf_token %}
+        <div class="card mb-3">
+            <div class="card-header">Основная информация</div>
+            <div class="card-body">
+                {{ form.as_p }}
+            </div>
+        </div>
+
+        <div class="card mb-3">
+            <div class="card-header">Материалы</div>
+            <div class="card-body">
+                {{ formset.management_form }}
+                {% for subform in formset %}
+                    <div class="border p-3 mb-2">
+                        {{ subform.as_p }}
+                        {% if subform.instance.pk %}
+                            <input type="checkbox" name="{{ subform.prefix }}-DELETE"> Удалить
+                        {% endif %}
+                    </div>
+                {% endfor %}
+                <button type="submit" class="btn btn-primary">Сохранить</button>
+            </div>
+        </div>
+    </form>
+</body>
+</html>
