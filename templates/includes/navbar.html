@@ -7,10 +7,12 @@
 
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav me-auto">
+                {% if user.is_authenticated %}
                 <li class="nav-item"><a class="nav-link" href="#">Склады</a></li>
                 <li class="nav-item"><a class="nav-link" href="{% url 'material_list' %}">Материалы</a></li>
                 <li class="nav-item"><a class="nav-link" href="#">Движение</a></li>
                 <li class="nav-item"><a class="nav-link" href="#">Отчёты</a></li>
+                {% endif %}
             </ul>
             <ul class="navbar-nav">
                 {% if user.is_authenticated %}
@@ -18,7 +20,7 @@
                     <li class="nav-item"><a class="nav-link" href="{% url 'exit' %}">Выход</a></li>
                 {% else %}
                     <li class="nav-item"><a class="nav-link" href="{% url 'custom_login' %}">Вход</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{% url 'register' %}">Регистрация</a></li>
+{#                  <li class="nav-item"><a class="nav-link" href="{% url 'register' %}">Регистрация</a></li>#}
                 {% endif %}
             </ul>
         </div>
