@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container py-4">
+  <h2>{{ title }}</h2>
+  <form method="post" class="mt-3">
+    {% csrf_token %}
+    <div class="mb-3">
+      {{ form.name.label_tag }} {{ form.name }}
+    </div>
+    <div class="mb-3">
+      {{ form.article.label_tag }} {{ form.article }}
+    </div>
+    <div class="mb-3">
+      {{ form.unit.label_tag }} {{ form.unit }}
+    </div>
+    <button type="submit" class="btn btn-primary">Сохранить</button>
+    <a href="{% url 'material_list' %}" class="btn btn-secondary">Назад</a>
+  </form>
+</div>
+{% endblock %}
