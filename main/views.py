@@ -78,3 +78,4 @@ def material_delete(request, pk):
         material.delete()
         return redirect("material_list")
     return render(request, "material_confirm_delete.html", {"material": material})
+
