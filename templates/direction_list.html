@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container py-4">
+  <h2>Направления</h2>
+  <a href="{% url 'direction_add' %}" class="btn btn-success mb-3">Добавить направление</a>
+  <table class="table table-bordered table-hover">
+    <thead><tr><th>Название</th><th>Действия</th></tr></thead>
+    <tbody>
+      {% for item in directions %}
+        <tr>
+          <td>{{ item.name }}</td>
+          <td>
+            <a href="{% url 'direction_edit' item.pk %}" class="btn btn-sm btn-warning">✏️</a>
+            <a href="{% url 'direction_delete' item.pk %}" class="btn btn-sm btn-danger">🗑️</a>
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

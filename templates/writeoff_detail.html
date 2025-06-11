@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container py-4">
+  <h2>Списание от {{ writeoff.date }}</h2>
+  <p><strong>Причина:</strong> {{ writeoff.reason }}</p>
+  <p><strong>Ответственный:</strong> {{ writeoff.responsible }}</p>
+
+  <table class="table table-sm table-bordered mt-4">
+    <thead>
+      <tr><th>Материал</th><th>Кол-во</th><th>Направление</th><th>Склад</th></tr>
+    </thead>
+    <tbody>
+      {% for item in writeoff.items.all %}
+      <tr>
+        <td>{{ item.material }}</td>
+        <td>{{ item.quantity }}</td>
+        <td>{{ item.direction }}</td>
+        <td>{{ item.location }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

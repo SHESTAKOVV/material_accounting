@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container py-4">
+  <h2>Материалы с низким остатком (меньше {{ threshold }})</h2>
+
+  <table class="table table-bordered">
+    <thead><tr><th>Материал</th><th>Остаток</th><th>Склад</th><th>Направление</th></tr></thead>
+    <tbody>
+      {% for item in deficit %}
+      <tr>
+        <td>{{ item.material.name }}</td>
+        <td>{{ item.quantity }}</td>
+        <td>{{ item.location.name }}</td>
+        <td>{{ item.direction.name }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

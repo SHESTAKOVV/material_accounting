@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container py-4">
+  <h2>Списания</h2>
+  <a href="{% url 'writeoff_add' %}" class="btn btn-danger mb-3">Новое списание</a>
+  <table class="table table-bordered">
+    <thead><tr><th>Дата</th><th>Причина</th><th>Ответственный</th><th>Действия</th></tr></thead>
+    <tbody>
+      {% for obj in writeoffs %}
+      <tr>
+        <td>{{ obj.date }}</td>
+        <td>{{ obj.reason }}</td>
+        <td>{{ obj.responsible }}</td>
+        <td>
+          <a href="{% url 'writeoff_detail' obj.pk %}" class="btn btn-sm btn-info">👁️</a>
+          <a href="{% url 'writeoff_delete' obj.pk %}" class="btn btn-sm btn-danger">🗑️</a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

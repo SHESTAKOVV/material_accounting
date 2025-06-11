@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container py-4">
+  <h2>Перемещение от {{ transfer.date }}</h2>
+  <p><strong>Ответственный:</strong> {{ transfer.responsible }}</p>
+  <table class="table table-sm table-bordered mt-4">
+    <thead>
+      <tr><th>Материал</th><th>Кол-во</th><th>Откуда</th><th>Куда</th></tr>
+    </thead>
+    <tbody>
+      {% for item in transfer.items.all %}
+      <tr>
+        <td>{{ item.material }}</td>
+        <td>{{ item.quantity }}</td>
+        <td>{{ item.from_direction }} / {{ item.from_location }}</td>
+        <td>{{ item.to_direction }} / {{ item.to_location }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

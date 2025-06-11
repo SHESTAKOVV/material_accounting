@@ -1,27 +1,53 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="{% url 'home' %}">Материалы+</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+  <div class="container-fluid">
+    <a class="navbar-brand" href="{% url 'home' %}">Материалы+</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
 
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav me-auto">
-                {% if user.is_authenticated %}
-                <li class="nav-item"><a class="nav-link" href="#">Склады</a></li>
-                <li class="nav-item"><a class="nav-link" href="{% url 'material_list' %}">Материалы</a></li>
-                <li class="nav-item"><a class="nav-link" href="#">Движение</a></li>
-                <li class="nav-item"><a class="nav-link" href="#">Отчёты</a></li>
-                {% endif %}
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav me-auto">
+        {% if user.is_authenticated %}
+          <!-- Справочники -->
+          <li class="nav-item"><a class="nav-link" href="{% url 'material_list' %}">Материалы</a></li>
+          <li class="nav-item"><a class="nav-link" href="{% url 'supplier_list' %}">Поставщики</a></li>
+          <li class="nav-item"><a class="nav-link" href="{% url 'location_list' %}">Склады</a></li>
+          <li class="nav-item"><a class="nav-link" href="{% url 'direction_list' %}">Направления</a></li>
+
+          <!-- Движение -->
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="movementDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Движение
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="movementDropdown">
+              <li><a class="dropdown-item" href="{% url 'income_list' %}">Поступления</a></li>
+              <li><a class="dropdown-item" href="{% url 'transfer_list' %}">Перемещения</a></li>
+              <li><a class="dropdown-item" href="{% url 'writeoff_list' %}">Списания</a></li>
             </ul>
-            <ul class="navbar-nav">
-                {% if user.is_authenticated %}
-                    <li class="nav-item"><a class="nav-link" href="#">{{ user.get_username }}</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{% url 'exit' %}">Выход</a></li>
-                {% else %}
-                    <li class="nav-item"><a class="nav-link" href="{% url 'custom_login' %}">Вход</a></li>
-                {% endif %}
+          </li>
+
+          <!-- Отчёты -->
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="reportDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Отчёты
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="reportDropdown">
+              <li><a class="dropdown-item" href="{% url 'report_stock' %}">Остатки</a></li>
+              <li><a class="dropdown-item" href="{% url 'report_movement' %}">Движение за период</a></li>
+              <li><a class="dropdown-item" href="{% url 'report_deficit' %}">Дефицитные материалы</a></li>
             </ul>
-        </div>
+          </li>
+        {% endif %}
+      </ul>
+
+      <ul class="navbar-nav">
+        {% if user.is_authenticated %}
+          <li class="nav-item"><a class="nav-link" href="#">{{ user.get_username }}</a></li>
+          <li class="nav-item"><a class="nav-link" href="{% url 'exit' %}">Выход</a></li>
+        {% else %}
+          <li class="nav-item"><a class="nav-link" href="{% url 'custom_login' %}">Вход</a></li>
+        {% endif %}
+      </ul>
     </div>
+  </div>
 </nav>

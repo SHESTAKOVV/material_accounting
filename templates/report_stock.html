@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container py-4">
+  <h2>Отчёт по остаткам</h2>
+
+  <form method="get" class="mb-3">
+    <input type="text" name="q" class="form-control" placeholder="Поиск по материалу..." value="{{ request.GET.q }}">
+  </form>
+
+  <table class="table table-bordered table-hover">
+    <thead class="table-light">
+      <tr>
+        <th>Материал</th>
+        <th>Остаток</th>
+        <th>Ед. изм.</th>
+        <th>Склад</th>
+        <th>Направление</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for stock in stocks %}
+      <tr>
+        <td>{{ stock.material.name }}</td>
+        <td>{{ stock.quantity }}</td>
+        <td>{{ stock.material.unit }}</td>
+        <td>{{ stock.location.name }}</td>
+        <td>{{ stock.direction.name }}</td>
+      </tr>
+      {% empty %}
+      <tr><td colspan="5" class="text-center text-muted">Нет данных</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

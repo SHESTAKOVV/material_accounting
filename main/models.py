@@ -9,6 +9,12 @@ class Unit(models.Model):
     def __str__(self):
         return self.name
 
+class Supplier(models.Model):
+    name = models.CharField(max_length=255, unique=True, verbose_name="Название поставщика")
+
+    def __str__(self):
+        return self.name
+
 
 class Material(models.Model):
     name = models.CharField(max_length=255, unique=True, verbose_name="Наименование материала")
@@ -37,7 +43,7 @@ class Location(models.Model):
 
 class MaterialIncome(models.Model):
     date = models.DateField(verbose_name="Дата поступления")
-    supplier = models.CharField(max_length=255, verbose_name="Поставщик")
+    supplier = models.ForeignKey(Supplier, on_delete=models.PROTECT, verbose_name="Поставщик")
     responsible = models.ForeignKey(User, on_delete=models.PROTECT, verbose_name="Ответственный")
     created_at = models.DateTimeField(auto_now_add=True)
 

@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container py-4">
+  <h2>Отчёт по движению</h2>
+
+  <form method="get" class="row g-3 mb-3">
+    <div class="col-auto">
+      <input type="date" name="start" class="form-control" value="{{ start }}">
+    </div>
+    <div class="col-auto">
+      <input type="date" name="end" class="form-control" value="{{ end }}">
+    </div>
+    <div class="col-auto">
+      <button type="submit" class="btn btn-primary">Показать</button>
+    </div>
+  </form>
+
+  <h4>Поступления</h4>
+  <ul>
+    {% for inc in incomes %}
+      <li>{{ inc.date }} — {{ inc.supplier }} ({{ inc.items.count }} поз.)</li>
+    {% empty %}
+      <li class="text-muted">Нет поступлений</li>
+    {% endfor %}
+  </ul>
+
+  <h4>Перемещения</h4>
+  <ul>
+    {% for tr in transfers %}
+      <li>{{ tr.date }} — {{ tr.responsible }} ({{ tr.items.count }} поз.)</li>
+    {% empty %}
+      <li class="text-muted">Нет перемещений</li>
+    {% endfor %}
+  </ul>
+
+  <h4>Списания</h4>
+  <ul>
+    {% for w in writeoffs %}
+      <li>{{ w.date }} — {{ w.reason }} ({{ w.items.count }} поз.)</li>
+    {% empty %}
+      <li class="text-muted">Нет списаний</li>
+    {% endfor %}
+  </ul>
+</div>
+{% endblock %}

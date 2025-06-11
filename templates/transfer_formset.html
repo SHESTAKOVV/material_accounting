@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container py-4">
+  <h2>{{ title }}</h2>
+  <form method="post">
+    {% csrf_token %}
+    <fieldset class="border p-3 mb-4">
+      {{ form_transfer.as_p }}
+    </fieldset>
+
+    <fieldset class="border p-3">
+      <legend class="w-auto">Материалы</legend>
+      {{ formset.management_form }}
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>Материал</th><th>Кол-во</th>
+            <th>Откуда (напр.)</th><th>Откуда (склад)</th>
+            <th>Куда (напр.)</th><th>Куда (склад)</th><th>Удалить</th>
+          </tr>
+        </thead>
+        <tbody>
+        {% for form in formset %}
+          <tr>
+            <td>{{ form.material }}</td>
+            <td>{{ form.quantity }}</td>
+            <td>{{ form.from_direction }}</td>
+            <td>{{ form.from_location }}</td>
+            <td>{{ form.to_direction }}</td>
+            <td>{{ form.to_location }}</td>
+            <td>{% if form.instance.pk %}{{ form.DELETE }}{% endif %}</td>
+          </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+      <button type="submit" class="btn btn-primary">Сохранить</button>
+      <a href="{% url 'transfer_list' %}" class="btn btn-secondary">Назад</a>
+    </fieldset>
+  </form>
+</div>
+{% endblock %}

@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container py-4">
+  <h2>Поставщики</h2>
+  <a href="{% url 'supplier_add' %}" class="btn btn-success mb-3">Добавить поставщика</a>
+  <table class="table table-bordered">
+    <thead><tr><th>Название</th><th>Действия</th></tr></thead>
+    <tbody>
+      {% for item in suppliers %}
+      <tr>
+        <td>{{ item.name }}</td>
+        <td>
+          <a href="{% url 'supplier_edit' item.pk %}" class="btn btn-sm btn-warning">✏️</a>
+          <a href="{% url 'supplier_delete' item.pk %}" class="btn btn-sm btn-danger">🗑️</a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

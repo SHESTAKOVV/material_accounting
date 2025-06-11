@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Unit
+from .models import Unit, Direction, Location, Supplier
 from django.contrib.auth.models import User
 from django.contrib.auth.admin import UserAdmin
 
@@ -17,3 +17,17 @@ class CustomUserAdmin(UserAdmin):
 
 admin.site.unregister(User)
 admin.site.register(User, CustomUserAdmin)
+
+
+@admin.register(Direction)
+class DirectionAdmin(admin.ModelAdmin):
+    list_display = ("name",)
+    search_fields = ("name",)
+
+@admin.register(Location)
+class LocationAdmin(admin.ModelAdmin):
+    list_display = ("name",)
+
+@admin.register(Supplier)
+class SupplierAdmin(admin.ModelAdmin):
+    list_display = ("name",)

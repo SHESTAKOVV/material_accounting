@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container py-4">
+  <h2>{{ title }}</h2>
+  <form method="post">
+    {% csrf_token %}
+    <fieldset class="border p-3 mb-4">
+      <legend class="w-auto">Шапка документа</legend>
+      {{ form_income.as_p }}
+    </fieldset>
+
+    <fieldset class="border p-3">
+      <legend class="w-auto">Материалы</legend>
+      {{ formset.management_form }}
+      <table class="table table-bordered">
+        <thead>
+          <tr><th>Материал</th><th>Кол-во</th><th>Направление</th><th>Склад</th><th>Удалить</th></tr>
+        </thead>
+        <tbody>
+        {% for form in formset %}
+          <tr>
+            <td>{{ form.material }}</td>
+            <td>{{ form.quantity }}</td>
+            <td>{{ form.direction }}</td>
+            <td>{{ form.location }}</td>
+            <td>{% if form.instance.pk %}{{ form.DELETE }}{% endif %}</td>
+          </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+      <button type="submit" class="btn btn-primary">Сохранить</button>
+      <a href="{% url 'income_list' %}" class="btn btn-secondary">Назад</a>
+    </fieldset>
+  </form>
+</div>
+{% endblock %}

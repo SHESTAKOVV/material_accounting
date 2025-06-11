@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container py-4">
+  <h2>Поступление от {{ income.date }}</h2>
+  <p><strong>Поставщик:</strong> {{ income.supplier }}</p>
+  <p><strong>Ответственный:</strong> {{ income.responsible }}</p>
+
+  <h4 class="mt-4">Материалы</h4>
+  <table class="table table-sm table-bordered">
+    <thead>
+      <tr><th>Материал</th><th>Кол-во</th><th>Направление</th><th>Склад</th></tr>
+    </thead>
+    <tbody>
+      {% for item in income.items.all %}
+      <tr>
+        <td>{{ item.material }}</td>
+        <td>{{ item.quantity }}</td>
+        <td>{{ item.direction }}</td>
+        <td>{{ item.location }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

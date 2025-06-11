@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container py-4">
+  <h2>{{ title }}</h2>
+  <form method="post">{% csrf_token %}
+    <h4>Шапка документа</h4>
+    {{ form_income.as_p }}
+    <hr>
+    <h4>Материал</h4>
+    {{ form_item.as_p }}
+    <button type="submit" class="btn btn-primary">Сохранить</button>
+    <a href="{% url 'income_list' %}" class="btn btn-secondary">Отмена</a>
+  </form>
+</div>
+{% endblock %}
