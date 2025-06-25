@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 
+
 # === Справочники ===
 
 class Unit(models.Model):
@@ -9,11 +10,24 @@ class Unit(models.Model):
     def __str__(self):
         return self.name
 
+
 class Supplier(models.Model):
-    name = models.CharField(max_length=255, unique=True, verbose_name="Название поставщика")
+    name = models.CharField(max_length=255, unique=True, verbose_name="Название компании")
+    phone = models.CharField(max_length=20, verbose_name="Телефон", blank=True, null=True)
+    email = models.EmailField(verbose_name="Email", blank=True, null=True)
+    contact_last_name = models.CharField(max_length=100, verbose_name="Фамилия", blank=True)
+    contact_first_name = models.CharField(max_length=100, verbose_name="Имя", blank=True)
+    contact_middle_name = models.CharField(max_length=100, verbose_name="Отчество", blank=True)
+    inn = models.CharField(max_length=12, verbose_name="ИНН", blank=True, null=True)
+    kpp = models.CharField(max_length=9, verbose_name="КПП", blank=True, null=True)
+
+    def get_contact_name(self):
+        parts = [self.contact_last_name, self.contact_first_name, self.contact_middle_name]
+        return ' '.join(filter(None, parts))
 
     def __str__(self):
-        return self.name
+        contact = self.get_contact_name()
+        return f"{self.name} ({contact})" if contact else self.name
 
 
 class Material(models.Model):
@@ -33,16 +47,31 @@ class Direction(models.Model):
 
 
 class Location(models.Model):
-    name = models.CharField(max_length=100, unique=True, verbose_name="Место хранения")
+    LOCATION_TYPES = [
+        ('WAREHOUSE', 'Склад'),
+        ('PRODUCTION', 'Производство'),
+        ('OFFICE', 'Офис'),
+        ('OTHER', 'Другое'),
+    ]
+
+    name = models.CharField(max_length=100, unique=True, verbose_name="Название")
+    address = models.TextField(verbose_name="Адрес", blank=True)
+    type = models.CharField(max_length=20, choices=LOCATION_TYPES, default='WAREHOUSE', verbose_name="Тип")
+    is_active = models.BooleanField(default=True, verbose_name="Активно")
+
+    class Meta:
+        verbose_name = "Место хранения"
+        verbose_name_plural = "Места хранения"
 
     def __str__(self):
-        return self.name
+        return f"{self.name} ({self.get_type_display()})"
 
 
 # === Поступление материалов ===
 
 class MaterialIncome(models.Model):
     date = models.DateField(verbose_name="Дата поступления")
+    document_number = models.CharField(max_length=100, verbose_name="Номер документа", blank=True, null=True)
     supplier = models.ForeignKey(Supplier, on_delete=models.PROTECT, verbose_name="Поставщик")
     responsible = models.ForeignKey(User, on_delete=models.PROTECT, verbose_name="Ответственный")
     created_at = models.DateTimeField(auto_now_add=True)
@@ -65,8 +94,9 @@ class IncomeItem(models.Model):
 # === Перемещение материалов ===
 
 class MaterialTransfer(models.Model):
-    date = models.DateField()
-    responsible = models.ForeignKey(User, on_delete=models.PROTECT)
+    date = models.DateField(verbose_name="Дата перемещения")
+    document_number = models.CharField(max_length=100, verbose_name="Номер документа", blank=True, null=True)
+    responsible = models.ForeignKey(User, on_delete=models.PROTECT, verbose_name="Ответственный")
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
@@ -89,9 +119,10 @@ class TransferItem(models.Model):
 # === Списание материалов ===
 
 class MaterialWriteOff(models.Model):
-    date = models.DateField(verbose_name="Дата")
+    date = models.DateField(verbose_name="Дата списания")
     reason = models.CharField(max_length=255, verbose_name="Причина")
-    responsible = models.ForeignKey(User, on_delete=models.PROTECT)
+    document_number = models.CharField(max_length=100, verbose_name="Номер документа", blank=True, null=True)
+    responsible = models.ForeignKey(User, on_delete=models.PROTECT, verbose_name="Ответственный")
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
