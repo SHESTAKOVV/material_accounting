@@ -28,6 +28,7 @@ urlpatterns = [
     path("incomes/add/", views.income_create, name="income_add"),
     path("incomes/<int:pk>/", views.income_detail, name="income_detail"),
     path("incomes/<int:pk>/delete/", views.income_delete, name="income_delete"),
+    path('incomes/import/', views.import_income_excel, name='import_income_excel'),
     path("transfers/", views.transfer_list, name="transfer_list"),
     path("transfers/add/", views.transfer_create, name="transfer_add"),
     path("transfers/<int:pk>/", views.transfer_detail, name="transfer_detail"),
@@ -39,4 +40,6 @@ urlpatterns = [
     path("reports/stock/", views.report_stock, name="report_stock"),
     path("reports/movement/", views.report_movement, name="report_movement"),
     path("reports/deficit/", views.report_deficit, name="report_deficit"),
+    path("reports/movement/export/", views.export_movement_excel, name="export_movement_excel"),
+    path("reports/deficit/export/", views.export_deficit_excel, name="export_deficit_excel"),
 ]

@@ -13,6 +13,10 @@
     <div class="col-auto">
       <button type="submit" class="btn btn-primary">Показать</button>
     </div>
+    <div class="col-auto">
+      <a href="{% url 'export_movement_excel' %}?start={{ start }}&end={{ end }}" class="btn btn-outline-success">📥 Экспорт в Excel
+      </a>
+    </div>
   </form>
 
   <h4>Поступления</h4>

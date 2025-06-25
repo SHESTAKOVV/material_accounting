@@ -2,38 +2,54 @@
 {% block title %}Главная{% endblock %}
 
 {% block content %}
-<div class="text-center">
-    <h1 class="mb-4">Добро пожаловать в систему учёта материалов</h1>
-    <p class="lead">Используйте навигацию сверху для перехода к нужному разделу.</p>
+<div class="text-center mb-5">
+    <h1 class="display-5 fw-bold text-primary">ИС учёта движения материалов</h1>
+    <p class="lead text-secondary">Управление складскими запасами, контроль движения и аналитика в одном месте.</p>
 </div>
 
-<div class="row mt-5">
-    <div class="col-md-4">
-        <div class="card border-primary shadow-sm">
+<div class="row g-4">
+    <div class="col-md-3">
+        <div class="card border-primary shadow-sm h-100">
             <div class="card-body text-center">
                 <i class="bi bi-box-seam fs-2 text-primary"></i>
-                <h5 class="card-title mt-2">Материалы</h5>
-                <p class="card-text">Управляйте всеми материалами и их остатками</p>
+                <h5 class="card-title mt-3">Материалы</h5>
+                <p class="card-text">Просматривайте, добавляйте и редактируйте номенклатуру и остатки.</p>
             </div>
         </div>
     </div>
-    <div class="col-md-4">
-        <div class="card border-success shadow-sm">
+
+    <div class="col-md-3">
+        <div class="card border-success shadow-sm h-100">
             <div class="card-body text-center">
                 <i class="bi bi-truck fs-2 text-success"></i>
-                <h5 class="card-title mt-2">Движение</h5>
-                <p class="card-text">Поступление, списание, перемещения и корректировки</p>
+                <h5 class="card-title mt-3">Движение</h5>
+                <p class="card-text">Фиксируйте поступления, перемещения и списания материалов.</p>
             </div>
         </div>
     </div>
-    <div class="col-md-4">
-        <div class="card border-warning shadow-sm">
+
+    <div class="col-md-3">
+        <div class="card border-warning shadow-sm h-100">
             <div class="card-body text-center">
-                <i class="bi bi-bar-chart fs-2 text-warning"></i>
-                <h5 class="card-title mt-2">Отчёты</h5>
-                <p class="card-text">Аналитика, минимальные остатки, экспорт в Excel</p>
+                <i class="bi bi-bar-chart-line fs-2 text-warning"></i>
+                <h5 class="card-title mt-3">Отчёты</h5>
+                <p class="card-text">Генерация аналитики по остаткам, движениям и дефициту.</p>
             </div>
         </div>
     </div>
+
+    <div class="col-md-3">
+        <div class="card border-secondary shadow-sm h-100">
+            <div class="card-body text-center">
+                <i class="bi bi-cloud-arrow-up fs-2 text-secondary"></i>
+                <h5 class="card-title mt-3">Импорт/Экспорт</h5>
+                <p class="card-text">Загружайте и выгружайте данные в форматах Excel для отчётности.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="text-center text-muted mt-5">
+    <small>Версия системы: 1.0.0 &nbsp;|&nbsp; Последнее обновление: {{ now|date:"d.m.Y" }}</small>
 </div>
 {% endblock %}

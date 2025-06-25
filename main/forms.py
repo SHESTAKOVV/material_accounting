@@ -1,7 +1,6 @@
 from django import forms
 from django.core.exceptions import ValidationError
 from django.forms import inlineformset_factory
-
 from main.models import Material, Direction, Location, Supplier, MaterialIncome, IncomeItem, MaterialTransfer, \
     TransferItem, MaterialWriteOff, WriteOffItem, Stock
 
@@ -31,17 +30,6 @@ class SupplierForm(forms.ModelForm):
     class Meta:
         model = Supplier
         fields = ["name"]
-
-class LocationForm(forms.ModelForm):
-    class Meta:
-        model = Location
-        fields = ["name"]
-
-class SupplierForm(forms.ModelForm):
-    class Meta:
-        model = Supplier
-        fields = ["name"]
-
 
 class MaterialIncomeForm(forms.ModelForm):
     class Meta:

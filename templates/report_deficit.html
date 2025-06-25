@@ -1,10 +1,23 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="container py-4">
-  <h2>Материалы с низким остатком (меньше {{ threshold }})</h2>
+
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h2>Материалы с низким остатком (меньше {{ threshold }})</h2>
+    <a href="{% url 'export_deficit_excel' %}" class="btn btn-outline-success">
+      📥 Экспорт в Excel
+    </a>
+  </div>
 
   <table class="table table-bordered">
-    <thead><tr><th>Материал</th><th>Остаток</th><th>Склад</th><th>Направление</th></tr></thead>
+    <thead>
+      <tr>
+        <th>Материал</th>
+        <th>Остаток</th>
+        <th>Склад</th>
+        <th>Направление</th>
+      </tr>
+    </thead>
     <tbody>
       {% for item in deficit %}
       <tr>

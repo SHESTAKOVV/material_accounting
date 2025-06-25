@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container py-4">
+  <h2>Импорт поступлений из Excel</h2>
+
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="mb-3">
+      <label for="file" class="form-label">Выберите файл Excel:</label>
+      <input type="file" class="form-control" name="file" required>
+    </div>
+    <button type="submit" class="btn btn-primary">Импортировать</button>
+    <a href="{% url 'income_list' %}" class="btn btn-secondary">Назад</a>
+  </form>
+
+  <div class="mt-4">
+    <p><strong>Ожидаемый формат файла:</strong></p>
+    <ul>
+      <li>Дата (в формате YYYY-MM-DD)</li>
+      <li>Поставщик (по имени)</li>
+      <li>Материал (должен существовать)</li>
+      <li>Количество</li>
+      <li>Направление (по имени)</li>
+      <li>Склад (по имени)</li>
+    </ul>
+  </div>
+</div>
+{% endblock %}

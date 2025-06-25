@@ -89,8 +89,8 @@ class TransferItem(models.Model):
 # === Списание материалов ===
 
 class MaterialWriteOff(models.Model):
-    date = models.DateField()
-    reason = models.CharField(max_length=255)
+    date = models.DateField(verbose_name="Дата")
+    reason = models.CharField(max_length=255, verbose_name="Причина")
     responsible = models.ForeignKey(User, on_delete=models.PROTECT)
     created_at = models.DateTimeField(auto_now_add=True)
 
