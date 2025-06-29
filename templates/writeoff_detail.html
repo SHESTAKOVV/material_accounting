@@ -2,6 +2,9 @@
 {% block content %}
 <div class="container py-4">
   <h2>Списание от {{ writeoff.date }}</h2>
+    {% if writeoff.document_number %}
+      <p><strong>Документ:</strong> {{ writeoff.document_number }}</p>
+    {% endif %}
   <p><strong>Причина:</strong> {{ writeoff.reason }}</p>
   <p><strong>Ответственный:</strong> {{ writeoff.responsible }}</p>
 

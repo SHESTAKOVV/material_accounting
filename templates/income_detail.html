@@ -3,6 +3,9 @@
 <div class="container py-4">
   <h2>Поступление от {{ income.date }}</h2>
   <p><strong>Поставщик:</strong> {{ income.supplier }}</p>
+    {% if income.document_number %}
+        <p><strong>Документ:</strong> {{ income.document_number }}</p>
+    {% endif %}
   <p><strong>Ответственный:</strong> {{ income.responsible }}</p>
 
   <h4 class="mt-4">Материалы</h4>

@@ -2,8 +2,6 @@ from django.db import models
 from django.contrib.auth.models import User
 
 
-# === Справочники ===
-
 class Unit(models.Model):
     name = models.CharField(max_length=50, unique=True, verbose_name="Единица измерения")
 
@@ -67,7 +65,6 @@ class Location(models.Model):
         return f"{self.name} ({self.get_type_display()})"
 
 
-# === Поступление материалов ===
 
 class MaterialIncome(models.Model):
     date = models.DateField(verbose_name="Дата поступления")
@@ -91,7 +88,6 @@ class IncomeItem(models.Model):
         return f"{self.material} - {self.quantity} {self.material.unit}"
 
 
-# === Перемещение материалов ===
 
 class MaterialTransfer(models.Model):
     date = models.DateField(verbose_name="Дата перемещения")
@@ -116,7 +112,6 @@ class TransferItem(models.Model):
         return f"{self.material} ({self.quantity}) из {self.from_location} в {self.to_location}"
 
 
-# === Списание материалов ===
 
 class MaterialWriteOff(models.Model):
     date = models.DateField(verbose_name="Дата списания")
@@ -139,8 +134,6 @@ class WriteOffItem(models.Model):
     def __str__(self):
         return f"{self.material} - {self.quantity} списано"
 
-
-# === Остатки на складе ===
 
 class Stock(models.Model):
     material = models.ForeignKey(Material, on_delete=models.CASCADE)

@@ -3,6 +3,9 @@
 <div class="container py-4">
   <h2>Перемещение от {{ transfer.date }}</h2>
   <p><strong>Ответственный:</strong> {{ transfer.responsible }}</p>
+    {% if transfer.document_number %}
+      <p><strong>Документ:</strong> {{ transfer.document_number }}</p>
+    {% endif %}
   <table class="table table-sm table-bordered mt-4">
     <thead>
       <tr><th>Материал</th><th>Кол-во</th><th>Откуда</th><th>Куда</th></tr>

@@ -1,4 +1,4 @@
-import datetime
+from datetime import datetime
 
 import openpyxl
 from django.contrib.auth.decorators import login_required
@@ -12,11 +12,8 @@ from .models import Material, Direction, Location, Supplier, MaterialIncome, Mat
     IncomeItem
 from django.contrib import messages
 
-
 def home(request):
   return render(request, 'home.html', {})
-
-
 
 def logout_action(request):
     if request.user.is_authenticated:
@@ -118,7 +115,6 @@ def direction_delete(request, pk):
         return redirect("direction_list")
     return render(request, "confirm_delete.html", {"object": obj, "title": "Удалить направление"})
 
-# --- Location ---
 @login_required
 def location_list(request):
     locations = Location.objects.all()
@@ -343,12 +339,15 @@ def report_movement(request):
     transfers = MaterialTransfer.objects.all()
     writeoffs = MaterialWriteOff.objects.all()
 
-    if start and end:
-        start_date = datetime.strptime(start, "%Y-%m-%d").date()
-        end_date = datetime.strptime(end, "%Y-%m-%d").date()
-        incomes = incomes.filter(date__range=(start_date, end_date))
-        transfers = transfers.filter(date__range=(start_date, end_date))
-        writeoffs = writeoffs.filter(date__range=(start_date, end_date))
+    if start and end and start != "None" and end != "None":
+        try:
+            start_date = datetime.strptime(start, "%Y-%m-%d").date()
+            end_date = datetime.strptime(end, "%Y-%m-%d").date()
+            incomes = incomes.filter(date__range=(start_date, end_date))
+            transfers = transfers.filter(date__range=(start_date, end_date))
+            writeoffs = writeoffs.filter(date__range=(start_date, end_date))
+        except ValueError:
+            pass
 
     return render(request, "report_movement.html", {
         "incomes": incomes,
@@ -361,7 +360,7 @@ def report_movement(request):
 
 @login_required
 def report_deficit(request):
-    threshold = 10  # можно сделать настраиваемым
+    threshold = 10
     deficit = Stock.objects.filter(quantity__lt=threshold).select_related("material", "location", "direction")
 
     return render(request, "report_deficit.html", {"deficit": deficit, "threshold": threshold})
@@ -377,22 +376,24 @@ def export_movement_excel(request):
     transfers = MaterialTransfer.objects.all()
     writeoffs = MaterialWriteOff.objects.all()
 
-    if start and end:
-        start_date = datetime.strptime(start, "%Y-%m-%d").date()
-        end_date = datetime.strptime(end, "%Y-%m-%d").date()
-        incomes = incomes.filter(date__range=(start_date, end_date))
-        transfers = transfers.filter(date__range=(start_date, end_date))
-        writeoffs = writeoffs.filter(date__range=(start_date, end_date))
+    if start and end and start != "None" and end != "None":
+        try:
+            start_date = datetime.strptime(start, "%Y-%m-%d").date()
+            end_date = datetime.strptime(end, "%Y-%m-%d").date()
+            incomes = incomes.filter(date__range=(start_date, end_date))
+            transfers = transfers.filter(date__range=(start_date, end_date))
+            writeoffs = writeoffs.filter(date__range=(start_date, end_date))
+        except ValueError:
+            pass
 
-    # Создание Excel
     wb = openpyxl.Workbook()
     ws = wb.active
     ws.title = "Движение"
 
-    # Заголовок
+
     ws.append(["Тип", "Дата", "Описание", "Материал", "Кол-во", "Склад/Направление"])
 
-    # Поступления
+
     for income in incomes:
         for item in income.items.all():
             ws.append([
@@ -404,7 +405,6 @@ def export_movement_excel(request):
                 f"{item.location} / {item.direction}",
             ])
 
-    # Перемещения
     for tr in transfers:
         for item in tr.items.all():
             ws.append([
@@ -416,7 +416,7 @@ def export_movement_excel(request):
                 f"{item.from_direction} → {item.to_direction}",
             ])
 
-    # Списания
+
     for wr in writeoffs:
         for item in wr.items.all():
             ws.append([
@@ -428,7 +428,7 @@ def export_movement_excel(request):
                 f"{item.location} / {item.direction}",
             ])
 
-    # Отправка
+
     response = HttpResponse(
         content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
     )
@@ -446,7 +446,7 @@ def export_deficit_excel(request):
     ws = wb.active
     ws.title = "Дефицит"
 
-    # Заголовки
+
     ws.append(["Материал", "Артикул", "Остаток", "Ед. изм.", "Склад", "Направление"])
 
     for item in deficit:
@@ -486,13 +486,13 @@ def import_income_excel(request):
                 direction_name = row[4].value
                 location_name = row[5].value
 
-                # Поиск или создание справочников
+
                 supplier, _ = Supplier.objects.get_or_create(name=supplier_name)
                 material = Material.objects.get(name=material_name)
                 direction = Direction.objects.get(name=direction_name)
                 location = Location.objects.get(name=location_name)
 
-                # Группировка: каждый импорт — отдельный документ
+
                 income = MaterialIncome.objects.create(
                     date=date,
                     supplier=supplier,
